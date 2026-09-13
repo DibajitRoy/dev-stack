@@ -10,10 +10,8 @@ interface ITechCardProps {
 }
 
 const TechCard = ({ tech, stack, setStack }: ITechCardProps) => {
-
   const isAdded = stack.some((item) => item.id === tech.id);
 
-  
   let badgeColor = "badge-neutral";
   if (tech.badge === "Popular") badgeColor = "badge-info";
   if (tech.badge === "Trending") badgeColor = "badge-secondary";
@@ -21,18 +19,12 @@ const TechCard = ({ tech, stack, setStack }: ITechCardProps) => {
   if (tech.badge === "Top SQL") badgeColor = "badge-accent";
 
   const handleAddToStack = () => {
-    // duplicate check
     const alreadyAdded = stack.some((item) => item.id === tech.id);
 
     if (alreadyAdded) {
       toast.warning(`${tech.name} is already in your stack`, {
         position: "top-center",
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
         theme: "light",
         transition: Bounce,
       });
@@ -49,7 +41,11 @@ const TechCard = ({ tech, stack, setStack }: ITechCardProps) => {
   };
 
   return (
-    <div className="rounded-2xl border border-base-300 bg-base-100 shadow-md p-5">
+    <div
+      className={`rounded-2xl border-2 bg-base-100 shadow-md p-5 transition-colors ${
+        isAdded ? "border-red-500" : "border-base-300"
+      }`}
+    >
       <div className="flex justify-between items-start mb-3">
         <img src={tech.icon} alt={tech.name} className="w-10 h-10" />
         <span className={`badge ${badgeColor} badge-outline font-semibold`}>
